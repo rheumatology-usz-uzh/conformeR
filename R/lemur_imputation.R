@@ -1,14 +1,14 @@
-# Lemur imputation of training and calibration set using lemur fit trained on training set.
-#
-# @param data_processed an output of the function data_processing. If provided, it replaces train_set and cal_set.
-# @param train_set a SingleCellExperiment object for training data with replicate_id, obs_condition, cell_type annotated in colData.
-# @param cal_set a SingleCellExperiment object for calibration data with replicate_id, obs_condition, cell_type annotated in colData, and same features as in train_set.
-# @param replicate_id name of the column in colData() for biological replicate id specified as a string.
-# @param obs_condition name of the column in colData() for the cell's observed condition specified as a string.
-# @param cell_type name of the column in colData(sce) for cell-types specified as a string.
-#
-# @return a list of length 2 containing the lemur-imputed training matrix and the lemur-imputed calibration matrix (no observed conditions but imputed values alone).
-#
+#' Lemur imputation of training and calibration set using lemur fit trained on training set.
+#'
+#' @param data_processed an output of the function data_processing. If provided, it replaces train_set and cal_set.
+#' @param train_set a SingleCellExperiment object for training data with replicate_id, obs_condition, cell_type annotated in colData.
+#' @param cal_set a SingleCellExperiment object for calibration data with replicate_id, obs_condition, cell_type annotated in colData, and same features as in train_set.
+#' @param replicate_id name of the column in colData() for biological replicate id specified as a string.
+#' @param obs_condition name of the column in colData() for the cell's observed condition specified as a string.
+#' @param cell_type name of the column in colData(sce) for cell-types specified as a string.
+#'
+#' @return a list of length 2 containing the lemur-imputed training matrix and the lemur-imputed calibration matrix (no observed conditions but imputed values alone).
+#'
 
 lemur_imputation <- function(data_processed,
                              train_set,
