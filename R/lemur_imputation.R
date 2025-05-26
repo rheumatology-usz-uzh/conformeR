@@ -8,7 +8,7 @@
 #' @param cell_type name of the column in colData(sce) for cell-types specified as a string.
 #'
 #' @return a list of length 2 containing the lemur-imputed training matrix and the lemur-imputed calibration matrix (no observed conditions but imputed values alone).
-#'
+#' @export
 
 lemur_imputation <- function(data_processed,
                              train_set,

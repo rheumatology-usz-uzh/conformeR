@@ -7,7 +7,7 @@
 #' @param alpha level of confidence between 0 and 1.
 #'
 #' @return a vector of score values of the same length as obs_cal.
-#'
+#' @export
 
 score <- function(obs_train,
                   pred_train,

@@ -9,7 +9,7 @@
 #' @param alpha level of confidence between 0 and 1.
 #'
 #' @return a single p-value encoding the difference between the observed and predicted expression levels for a new observed count.
-#'
+#' @export
 
 conf_pval <- function(obs_train,
                       pred_train,

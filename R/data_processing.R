@@ -10,7 +10,7 @@
 #' @param size_cal size in proportion of original data set for calibration set.
 #'
 #' @return a list of SingleCellExperiment objects with original dataset, training set, calibration set, test set, including conformal groups id as a new column in colData()
-#'
+#' @export
 
 data_processing <- function(sce,
                             replicate_id,
