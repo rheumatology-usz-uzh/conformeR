@@ -1,16 +1,16 @@
-# Outputs a matrix of (adjusted) p-values encoding the difference between the observed and predicted expression levels for each pair gene x cell in a test set given training set and calibration set, all three randomly built from an original sc-RNA-seq dataset of class SingleCellExperiment with replicate_id, obs_condition, cell_type annotated in colData.
-#
-# @param sce an original sc-RNA-seq dataset of class SingleCellExperiment with replicate_id, obs_condition, cell_type annotated in colData.
-# @param replicate_id name of the column in colData(sce) for biological replicate id specified as a string.
-# @param obs_condition name of the column in colData(sce) for the cell's observed condition specified as a string.
-# @param cell_type name of the column in colData(sce) for cell-types specified as a string.
-# @param size_train size in proportion of original data set for training set.
-# @param size_cal size in proportion of original data set for calibration set.
-# @param alpha level of confidence between 0 and 1.
-# @param cores number of workers for BiocParallel job.
-#
-# @return a test_set with two new assays named "pvalues" resp. "adj_pvalues" containing a matrix of p_values for each pair gene x cell resp. BH-adjusted p_values for each pair gene x cell..
-#
+#' Outputs a matrix of (adjusted) p-values encoding the difference between the observed and predicted expression levels for each pair gene x cell in a test set given training set and calibration set, all three randomly built from an original sc-RNA-seq dataset of class SingleCellExperiment with replicate_id, obs_condition, cell_type annotated in colData.
+#'
+#' @param sce an original sc-RNA-seq dataset of class SingleCellExperiment with replicate_id, obs_condition, cell_type annotated in colData.
+#' @param replicate_id name of the column in colData(sce) for biological replicate id specified as a string.
+#' @param obs_condition name of the column in colData(sce) for the cell's observed condition specified as a string.
+#' @param cell_type name of the column in colData(sce) for cell-types specified as a string.
+#' @param size_train size in proportion of original data set for training set.
+#' @param size_cal size in proportion of original data set for calibration set.
+#' @param alpha level of confidence between 0 and 1.
+#' @param cores number of workers for BiocParallel job.
+#'
+#' @return a test_set with two new assays named "pvalues" resp. "adj_pvalues" containing a matrix of p_values for each pair gene x cell resp. BH-adjusted p_values for each pair gene x cell..
+#'
 
 conformeR <- function(sce,
                       replicate_id,
