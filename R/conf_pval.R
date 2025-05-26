@@ -1,15 +1,15 @@
-# Outputs a p-value encoding the difference between the observed and predicted expression levels for a new observed count.
-# All data given as input has to refer to a same gene and belonging to cells within a same conformal group.
-#
-# @param obs_train a vector of observed logcounts, on which the quantile regression forest is trained.
-# @param pred_train a vector of predicted lemur logcounts of the same length as obs_train.
-# @param obs_cal a vector of observed logcounts, to be passed as argument of the score function.
-# @param pred_cal a vector of predicted lemur logcounts of the same length as obs_cal.
-# @param obs_test a new observed logcount.
-# @param alpha level of confidence between 0 and 1.
-#
-# @return a single p-value encoding the difference between the observed and predicted expression levels for a new observed count.
-#
+#' Outputs a p-value encoding the difference between the observed and predicted expression levels for a new observed count.
+#' All data given as input has to refer to a same gene and belonging to cells within a same conformal group.
+#'
+#' @param obs_train a vector of observed logcounts, on which the quantile regression forest is trained.
+#' @param pred_train a vector of predicted lemur logcounts of the same length as obs_train.
+#' @param obs_cal a vector of observed logcounts, to be passed as argument of the score function.
+#' @param pred_cal a vector of predicted lemur logcounts of the same length as obs_cal.
+#' @param obs_test a new observed logcount.
+#' @param alpha level of confidence between 0 and 1.
+#'
+#' @return a single p-value encoding the difference between the observed and predicted expression levels for a new observed count.
+#'
 
 conf_pval <- function(obs_train,
                       pred_train,
@@ -33,7 +33,7 @@ conf_pval <- function(obs_train,
   t_qscore <- quantile(score(obs_train, pred_train, obs_cal, pred_cal, alpha),
                        probs = qscore
   )
-  # Build the bounds so that the observed condition lies within the interval.
+  #' Build the bounds so that the observed condition lies within the interval.
   bounds <- c(
     min(obs_test, quantpred[, 1] - t_qscore),
     max(obs_test, quantpred[, 2] + t_qscore)
@@ -44,7 +44,7 @@ conf_pval <- function(obs_train,
                          data.frame(obs_counts = obs_test),
                          what = c(alpha / 2, 1 - alpha / 2)
     )
-    # estimate quantiles for the score function.
+    #' estimate quantiles for the score function.
     qscore <- floor((n + 1) * (1 - alpha)) / n
     if (qscore <= 0 | qscore >= 1) {
       return(1)
@@ -52,7 +52,7 @@ conf_pval <- function(obs_train,
     t_qscore <- quantile(score(obs_train, pred_train, obs_cal, pred_cal, alpha),
                          probs = qscore
     )
-    # Build the bounds so that the observed condition lies within the interval.
+    #' Build the bounds so that the observed condition lies within the interval.
     bounds <- c(
       min(obs_test, quantpred[, 1] - t_qscore),
       max(obs_test, quantpred[, 2] + t_qscore)
