@@ -22,10 +22,6 @@ conf_pval(obs_train, pred_train, obs_cal, pred_cal, obs_test, alpha = 0.1)
 }
 \value{
 a single p-value encoding the difference between the observed and predicted expression levels for a new observed count.
-
-Build the bounds so that the observed condition lies within the interval.
-estimate quantiles for the score function.
-Build the bounds so that the observed condition lies within the interval.
 }
 \description{
 Outputs a p-value encoding the difference between the observed and predicted expression levels for a new observed count.

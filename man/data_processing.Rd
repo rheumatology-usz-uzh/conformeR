@@ -32,10 +32,6 @@ data_processing(
 }
 \value{
 a list of SingleCellExperiment objects with original dataset, training set, calibration set, test set, including conformal groups id as a new column in colData()
-
-Build the conformal groups.
-Split data.
-Prepare each training / calibration / test set.
 }
 \description{
 Two-step data processing of the original dataset ;

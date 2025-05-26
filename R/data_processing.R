@@ -23,13 +23,13 @@ data_processing <- function(sce,
   colData(sce)[[replicate_id]] <- as.factor(colData(sce)[[replicate_id]])
   colData(sce)[[obs_condition]] <- as.factor(colData(sce)[[obs_condition]])
   colData(sce)[[cell_type]] <- as.factor(colData(sce)[[cell_type]])
-  #' Build the conformal groups.
+  # Build the conformal groups.
   conf_group <- (as.data.frame(colData(sce)) %>%
                    mutate(conf_group = group_indices(., !!!syms(
                      c(replicate_id, cell_type)
                    ))))$conf_group
   colData(sce)$conf_group <- as.factor(conf_group)
-  #' Split data.
+  # Split data.
   id_train <- sample(1:ncol(sce), floor(size_train * ncol(sce)),
                      replace =
                        FALSE
@@ -40,7 +40,7 @@ data_processing <- function(sce,
   )
   id_test <- subset(1:ncol(sce), (!1:ncol(sce) %in% id_train) &
                       (!1:ncol(sce) %in% id_cal))
-  #' Prepare each training / calibration / test set.
+  # Prepare each training / calibration / test set.
   train_set <- sce[, id_train]
   cal_set <- sce[, id_cal]
   test_set <- sce[, id_test]
