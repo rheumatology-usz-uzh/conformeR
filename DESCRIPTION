@@ -1,12 +1,18 @@
 Package: conformeR
-Title: What the Package Does (One Line, Title Case)
+Title: Conformalized differential expression analysis of multi-condition single-cell data.
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person("Justine", "Leclerc", , "justine.leclerc@usz.ch", role = c("cre", "aut"),
+           comment = c(ORCID = "0009-0002-5667-0778"))
+    person("Christof", "Seiler", ,"christof.seiler@usz.ch, role="aut",
+           comment = c(ORCID = "0000-0001-8802-3642"))
+Description: Multi-condition single-cell RNA sequencing reveals how gene expression varies across conditions within specific cell populations. Most current methods model these changes by fitting gene-wise generalized linear models to read counts, and then detect differential expression using statistical tests such as the likelihood-ratio test or the quasi-likelihood F-test \citep{edgeR}. Each gene $\times$ cell pair occurs only once in the dataset and is observed under a single condition. Predicting counterfactual expression levels---e.g., estimating how a cell would express genes under treatment even if observed under control---increases sample size by imputing expression values for all conditions. This might reduce false discovery rates and improve detection power, both key to efficient statistical testing.The method LEMUR \citep{lemur} addresses this imputation task using a type of PCA that learns for each cell a low-rank structure per condition. The flexibility of the model makes uncertainty more challenging to quantify, an open problem as stated by the authors of LEMUR. Our conformeR is a wrapper around LEMUR R-package that adds uncertainty quantification without altering the underlying model. conformeR constructs prediction intervals for LEMUR-imputed values with finite-sample coverage guarantees using conformal prediction \citep{cpvovk}, which relies on the assumption that cells from the same biological replicate and cell type are exchangeable. By inverting conformal prediction intervals, conformeR outputs for each gene $\times$ cell pair a p-value that encodes the difference between the observed and predicted expression levels. We then adjust these p-values using the Benjamini-Hochberg procedure \citep{bh_correction}, leveraging the fact that conformal p-values satisfy the positive regression dependence on a subset condition \citep{pval_prds}. Finally, conformeR aggregates over cells from the same replicate and cell type to yield a single p-value per gene.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: BiocManager,glmGamPoi,dplyr,SummarizedExperiment,SingleCellExperiment,lemur,BiocParallel,quantregForest,scuttle
