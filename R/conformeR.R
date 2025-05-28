@@ -19,8 +19,7 @@ conformeR <- function(sce,
                       size_train = .25,
                       size_cal = .25,
                       alpha = .1,
-                      cores = 32,
-                      file_name) {
+                      cores = 32) {
   param <- BatchtoolsParam(workers = cores)
   data_processed <- data_processing(
     sce,
