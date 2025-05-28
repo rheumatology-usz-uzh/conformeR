@@ -12,8 +12,7 @@ conformeR(
   size_train = 0.25,
   size_cal = 0.25,
   alpha = 0.1,
-  cores = 32,
-  file_name
+  cores = 32
 )
 }
 \arguments{
