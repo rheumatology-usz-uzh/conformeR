@@ -2,6 +2,8 @@
 #' 1) creation of conformal groups.
 #' 2) splitting of the original dataset
 #'
+#' @importFrom SingleCellExperiment colData
+#'
 #' @param sce an original sc-RNA-seq dataset of class SingleCellExperiment with replicate_id, obs_condition, cell_type annotated in colData.
 #' @param replicate_id name of the column in colData(sce) for biological replicate id specified as a string.
 #' @param obs_condition name of the column in colData(sce) for the cell's observed condition specified as a string.

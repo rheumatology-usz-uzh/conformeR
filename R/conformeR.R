@@ -1,4 +1,8 @@
 #' Outputs a matrix of (adjusted) p-values encoding the difference between the observed and predicted expression levels for each pair gene x cell in a test set given training set and calibration set, all three randomly built from an original sc-RNA-seq dataset of class SingleCellExperiment with replicate_id, obs_condition, cell_type annotated in colData.
+#' @importFrom BiocParallel BatchtoolsParam
+#' @importFrom BiocParallel bptry
+#' @importFrom BiocParallel bplapply
+#' @import dplyr
 #'
 #' @param sce an original sc-RNA-seq dataset of class SingleCellExperiment with replicate_id, obs_condition, cell_type annotated in colData.
 #' @param replicate_id name of the column in colData(sce) for biological replicate id specified as a string.

@@ -1,6 +1,8 @@
 #' Outputs a p-value encoding the difference between the observed and predicted expression levels for a new observed count.
 #' All data given as input has to refer to a same gene and belonging to cells within a same conformal group.
 #'
+#' @importFrom quantregForest quantregForest
+#'
 #' @param obs_train a vector of observed logcounts, on which the quantile regression forest is trained.
 #' @param pred_train a vector of predicted lemur logcounts of the same length as obs_train.
 #' @param obs_cal a vector of observed logcounts, to be passed as argument of the score function.

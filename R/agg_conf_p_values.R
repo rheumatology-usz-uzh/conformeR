@@ -1,5 +1,6 @@
 #' Outputs the sce returned by conformeR with gene-level aggregated p-values within each conformal groups. Averaging is performed.
 #'
+#' @importFrom scuttle aggregateAcrossCells
 #' @param sce output of conformeR with the assay "adj_pvalues".
 #'
 #' @return the sce returned by conformeR with gene-level aggregated p-values within each conformal groups.

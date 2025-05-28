@@ -1,4 +1,6 @@
 #' Lemur imputation of training and calibration set using lemur fit trained on training set.
+#' @importFrom lemur lemur
+#' @importFrom lemur align_by_grouping
 #'
 #' @param data_processed an output of the function data_processing. If provided, it replaces train_set and cal_set.
 #' @param train_set a SingleCellExperiment object for training data with replicate_id, obs_condition, cell_type annotated in colData.
