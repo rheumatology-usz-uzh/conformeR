@@ -21,14 +21,12 @@ fdr <- function(p_val_df, cutoff = 0.05, cores = 32) {
           filter(conf_group == g) %>%
           pull(!!sym(gene_name)) %>%
           as.numeric()
-        print(df_group)
-        print(str(df_group))
         if (any(is.na(df_group))) {
           warning(paste0("NA values found in ", gene_name, " for group ", g))
           return(NA)
         }
         qobj <- qvalue(p = df_group, lambda = seq(min(df_group), min(max(df_group),0.95), 0.05))
-        FDR <- max(qobj$qvalues[qobj$pvalues <= cutoff], na.rm = TRUE)
+        FDR <- ifelse(max(qobj$qvalues[qobj$pvalues <= cutoff], na.rm = TRUE)==-Inf, 1,max(qobj$qvalues[qobj$pvalues <= cutoff], na.rm = TRUE))
         return(FDR)
       }, BPPARAM = params)
       return(unlist(gene_fdr))
