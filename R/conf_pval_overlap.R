@@ -4,9 +4,9 @@
 #' @importFrom quantregForest quantregForest
 #'
 #' @param obs_train a vector of observed logcounts, on which the quantile regression forest is trained.
-#' @param pred_train a vector of predicted lemur logcounts of the same length as obs_train.
-#' @param obs_cal a vector of observed logcounts, to be passed as argument of the score function.
-#' @param pred_cal a vector of predicted lemur logcounts of the same length as obs_cal.
+#' @param pred_train a vector of predicted lemur logcounts of the same length as `obs_train`.
+#' @param obs_cal a vector of observed logcounts, to be passed as argument of `score_conformeR`.
+#' @param pred_cal a vector of predicted lemur logcounts of the same length as `obs_cal`.
 #' @param obs_test a new observed logcount.
 #' @param alpha level of confidence between 0 and 1.
 #'
@@ -32,7 +32,7 @@ conf_pval <- function(obs_train,
   if (qscore <= 0 | qscore >= 1) {
     return(1)
   }
-  t_qscore <- quantile(score(obs_train, pred_train, obs_cal, pred_cal, alpha),
+  t_qscore <- quantile(score_conformeR(obs_train, pred_train, obs_cal, pred_cal, alpha),
                        probs = qscore
   )
   # Build the bounds so that the observed condition lies within the interval.
@@ -51,7 +51,7 @@ conf_pval <- function(obs_train,
     if (qscore <= 0 | qscore >= 1) {
       return(1)
     }
-    t_qscore <- quantile(score(obs_train, pred_train, obs_cal, pred_cal, alpha),
+    t_qscore <- quantile(score_conformeR(obs_train, pred_train, obs_cal, pred_cal, alpha),
                          probs = qscore
     )
     # Build the bounds so that the observed condition lies within the interval.

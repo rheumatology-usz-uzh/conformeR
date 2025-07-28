@@ -2,10 +2,9 @@
 % Please edit documentation in R/data_processing.R
 \name{data_processing}
 \alias{data_processing}
-\title{Two-step data processing of the original dataset ;
-\enumerate{
-\item creation of conformal groups.
-\item splitting of the original dataset
+\title{\enumerate{
+\item creation of conformal groups \code{conf_group}.
+\item splitting of the original dataset using \code{initial_split} and balancing on \code{conf_group}.
 }}
 \usage{
 data_processing(
@@ -13,30 +12,29 @@ data_processing(
   replicate_id,
   obs_condition,
   cell_type,
-  size_train = 0.25,
+  size_train = 0.5,
   size_cal = 0.25
 )
 }
 \arguments{
-\item{sce}{an original sc-RNA-seq dataset of class SingleCellExperiment with replicate_id, obs_condition, cell_type annotated in colData.}
+\item{sce}{SingleCellExperiment with replicate_id, obs_condition, cell_type in colData}
 
-\item{replicate_id}{name of the column in colData(sce) for biological replicate id specified as a string.}
+\item{replicate_id}{column name for biological replicate (string)}
 
-\item{obs_condition}{name of the column in colData(sce) for the cell's observed condition specified as a string.}
+\item{obs_condition}{column name for observed condition (string)}
 
-\item{cell_type}{name of the column in colData(sce) for cell-types specified as a string.}
+\item{cell_type}{column name for cell types (string)}
 
-\item{size_train}{size in proportion of original data set for training set.}
+\item{size_train}{proportion for training set}
 
-\item{size_cal}{size in proportion of original data set for calibration set.}
+\item{size_cal}{proportion for calibration set of training set.}
 }
 \value{
-a list of SingleCellExperiment objects with original dataset, training set, calibration set, test set, including conformal groups id as a new column in colData()
+list with original sce, proper training, calibration, and test sets
 }
 \description{
-Two-step data processing of the original dataset ;
 \enumerate{
-\item creation of conformal groups.
-\item splitting of the original dataset
+\item creation of conformal groups \code{conf_group}.
+\item splitting of the original dataset using \code{initial_split} and balancing on \code{conf_group}.
 }
 }

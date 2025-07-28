@@ -16,7 +16,7 @@
 #' @return a test_set with two new assays named "pvalues" resp. "adj_pvalues" containing a matrix of p_values for each pair gene x cell resp. BH-adjusted p_values for each pair gene x cell..
 #' @export
 
-conformeR <- function(sce,
+conformeR_lemur <- function(sce,
                       replicate_id,
                       obs_condition,
                       cell_type,

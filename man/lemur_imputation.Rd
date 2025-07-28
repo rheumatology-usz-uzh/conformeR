@@ -4,21 +4,10 @@
 \alias{lemur_imputation}
 \title{Lemur imputation of training and calibration set using lemur fit trained on training set.}
 \usage{
-lemur_imputation(
-  data_processed,
-  train_set,
-  cal_set,
-  replicate_id,
-  obs_condition,
-  cell_type
-)
+lemur_imputation(data_processed, replicate_id, obs_condition, cell_type)
 }
 \arguments{
 \item{data_processed}{an output of the function data_processing. If provided, it replaces train_set and cal_set.}
-
-\item{train_set}{a SingleCellExperiment object for training data with replicate_id, obs_condition, cell_type annotated in colData.}
-
-\item{cal_set}{a SingleCellExperiment object for calibration data with replicate_id, obs_condition, cell_type annotated in colData, and same features as in train_set.}
 
 \item{replicate_id}{name of the column in colData() for biological replicate id specified as a string.}
 
