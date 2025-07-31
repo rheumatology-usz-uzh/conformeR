@@ -14,26 +14,34 @@ fdr <- function(p_val_df, cutoff = 0.05, cores = 32) {
   suppressMessages(suppressWarnings({
     set.seed(123)
     params <- BatchtoolsParam(workers = cores)
-    results <- lapply(unique(p_val_df$conf_group), function(g) {
-      gene_fdr <- bplapply(seq_len(ncol(p_val_df) - 1), function(i) {
-        gene_name <- colnames(p_val_df)[i]
-        df_group <- p_val_df %>%
-          filter(conf_group == g) %>%
-          pull(!!sym(gene_name)) %>%
-          as.numeric()
-        if (any(is.na(df_group))) {
-          warning(paste0("NA values found in ", gene_name, " for group ", g))
-          return(NA)
-        }
-        qobj <- qvalue(p = df_group, lambda = seq(min(df_group), min(max(df_group),0.95), 0.05))
-        FDR <- ifelse(max(qobj$qvalues[qobj$pvalues <= cutoff], na.rm = TRUE)==-Inf, 1,max(qobj$qvalues[qobj$pvalues <= cutoff], na.rm = TRUE))
-        return(FDR)
+
+    conf_groups <- unique(p_val_df$conf_group)
+    genes <- unique(p_val_df$gene)
+
+    results <- lapply(conf_groups, function(g) {
+      gene_fdr <- bplapply(genes, function(gene_name) {
+        tryCatch({
+          df_group <- p_val_df %>%
+            filter(conf_group == g, gene == gene_name)
+          pvals <- df_group$pvalue
+          qobj <- qvalue(p = pvals, lambda = seq(min(pvals), min(max(pvals), 0.95), 0.05))
+          fdr_val <- ifelse(
+            all(qobj$pvalues > cutoff),
+            1,
+            max(qobj$qvalues[qobj$pvalues <= cutoff], na.rm = TRUE)
+          )
+          return(fdr_val)
+
+        })
       }, BPPARAM = params)
+
       return(unlist(gene_fdr))
     })
-    res_mat <- matrix(unlist(results), ncol=ncol(p_val_df)-1,byrow=T)
-    colnames(res_mat) <- colnames(p_val_df)[-ncol(p_val_df)]
-    rownames(res_mat) <- unique(p_val_df$conf_group)
+
+    res_mat <- matrix(unlist(results), ncol = length(genes), byrow = TRUE)
+    colnames(res_mat) <- genes
+    rownames(res_mat) <- conf_groups
+
     return(res_mat)
   }))
 }
