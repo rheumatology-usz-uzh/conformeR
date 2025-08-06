@@ -20,9 +20,8 @@ conformeR_cfcausal<- function(sce,
                                obs_condition,
                                replicate_id,
                                cell_type,
-                               spacing = 0.1,
+                               spacing = 0.01,
                                size_train = 0.5,
-                               cutoff = .05,
                                cores = 32) {
   suppressMessages(suppressWarnings({
     set.seed(123)

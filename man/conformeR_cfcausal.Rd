@@ -9,9 +9,8 @@ conformeR_cfcausal(
   obs_condition,
   replicate_id,
   cell_type,
-  spacing = 0.1,
+  spacing = 0.01,
   size_train = 0.5,
-  cutoff = 0.05,
   cores = 32
 )
 }
@@ -28,9 +27,9 @@ conformeR_cfcausal(
 
 \item{size_train}{proportion for training set.}
 
-\item{cutoff}{confidence level for FDR}
-
 \item{cores}{number of workers for BiocParallel job.}
+
+\item{cutoff}{confidence level for FDR}
 
 \item{size_cal}{proportion for calibration set.}
 }
