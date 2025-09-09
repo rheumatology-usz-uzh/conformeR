@@ -4,14 +4,13 @@
 \alias{prop_score}
 \title{Fit a propensity score model}
 \usage{
-prop_score(proper_set, gene_index, gene_names)
+prop_score(proper_set, gene, gene_names, obs_condition)
 }
 \arguments{
 \item{proper_set}{A data frame containing predictors (logcounts) and the
 treatment indicator \code{Tr}.}
 
-\item{gene_index}{Integer index of the gene of interest to be excluded
-from the predictors.}
+\item{gene}{Character string giving the name of the target gene.}
 
 \item{gene_names}{Character vector of all gene names.}
 }

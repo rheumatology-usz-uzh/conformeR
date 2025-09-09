@@ -4,14 +4,14 @@
 \alias{compute_cqr_scores}
 \title{Compute conformal CQR scores}
 \usage{
-compute_cqr_scores(qr_model, data_cal, gene_idx, alpha)
+compute_cqr_scores(qr_model, data_cal, gene, alpha)
 }
 \arguments{
 \item{qr_model}{A quantile regression model fitted with conformalCQR.}
 
 \item{data_cal}{A data frame containing calibration covariates and outcomes.}
 
-\item{gene_idx}{Column index of the outcome gene.}
+\item{gene}{Character string giving the name of the target gene.}
 
 \item{alpha}{Numeric scalar, miscoverage level in (0,1).}
 }

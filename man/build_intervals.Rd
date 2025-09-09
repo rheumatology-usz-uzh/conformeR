@@ -5,19 +5,19 @@
 \title{Build conformal prediction intervals for difference between observed and counterfactual logcounts}
 \usage{
 build_intervals(
-  test_row,
+  test_data,
   qr_model,
   other_scores,
   other_weights,
   w_x,
   alpha,
-  gene_idx,
+  gene,
   gene_names,
   tr_flag
 )
 }
 \arguments{
-\item{test_row}{A single-row data frame containing covariates (all-but-gene-of-interest logcounts) for the test cell.}
+\item{test_data}{A data frame of test cells (rows = cells, cols = covariates).}
 
 \item{qr_model}{A quantile regression model fitted with conformalCQR.}
 
@@ -25,21 +25,21 @@ build_intervals(
 
 \item{other_weights}{Numeric vector of calibration weights.}
 
-\item{w_x}{Numeric scalar, weight associated with the test sample.}
+\item{w_x}{Numeric vector of weights associated with the test samples.}
 
 \item{alpha}{Numeric scalar, miscoverage level in (0,1).}
 
-\item{gene_idx}{Column index of the outcome gene.}
-
 \item{gene_names}{Character vector of all gene names.}
 
-\item{tr_flag}{Integer flag (0 or 1) indicating treatment/control setting.}
+\item{tr_flag}{Integer-vector flag (0 or 1) indicating treatment/control setting for each row of \code{test_data}}
+
+\item{gene_idx}{Column index of the outcome gene.}
 }
 \value{
-A numeric vector of length two, giving the lower and upper bounds of the conformal prediction interval.
+A numeric matrix with two columns ("lower","upper"), one row per test cell.
 }
 \description{
-Internal helper function that constructs prediction intervals for the
-difference between observed and counterfactual logcounts using weighted
-split-CQR.
+Constructs prediction intervals for the difference between observed and
+counterfactual logcounts using weighted split-CQR. Vectorized: accepts
+multiple test rows at once.
 }

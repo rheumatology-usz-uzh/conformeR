@@ -4,10 +4,10 @@
 \alias{interval_to_pval}
 \title{Convert conformal intervals to p-values}
 \usage{
-interval_to_pval(intervals_df)
+interval_to_pval(interval_df)
 }
 \arguments{
-\item{intervals_df}{A data frame of prediction intervals as output by function \code{conformeR_cfcausal} or \code{conformeR_cf}}
+\item{interval_df}{A data frame of prediction intervals as output by function \code{conformeR_cfcausal} or \code{conformeR_cf}}
 }
 \value{
 A data frame with one row per \code{cell_id}-\code{gene}
