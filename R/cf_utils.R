@@ -221,8 +221,6 @@ process_group <- function(g, dt_train, dt_cal, dt_test, gene_names, alphas, obs_
 #'
 #' @seealso \code{\link{process_group}}
 
-process_gene_chunk <- function(some_idxs, train_combined_df, cal_combined_df, test_g, gene_names, alphas, obs_condition, param3) { ... }
-
 process_gene_chunk <- function( some_idxs, train_combined_df, cal_combined_df, test_g, gene_names, alphas, obs_condition, param3) {
   gene_results <- bplapply(some_idxs, function(gene_idx) {
     gene <- gene_names[gene_idx]
@@ -274,6 +272,7 @@ process_gene_chunk <- function( some_idxs, train_combined_df, cal_combined_df, t
     colnames(df_out) <- c("lower","upper")
     df_out$alpha   <- rep(alphas, each = nrow(test_g))
     df_out$gene    <- gene
+    df_out$cell_id <- rep(seq_len(nrow(test_g)),length(alphas))
     df_out$covered <- factor(ifelse(df_out$lower < 0 & 0 < df_out$upper, "inside", "outside"))
     df_out
   }, BPPARAM = param3)
