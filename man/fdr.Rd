@@ -7,16 +7,20 @@
 fdr(interval_df, cutoff = 0.05, cores = 32)
 }
 \arguments{
+\item{interval_df}{data frame of prediction intervals as output by
+function \code{conformeR_cfcausal} or \code{conformeR_cf}}
+
 \item{cutoff}{confidence level for aggregated FDR}
 
 \item{cores}{number of workers for BiocParallel job.}
-
-\item{A}{data frame of prediction intervals as output by function \code{conformeR_cfcausal} or \code{conformeR_cf}}
 }
 \value{
-a list 3 with one p-values data-frame at level cell x gene,
-one of length \code{unique(interval_df$gene)} each containing a list of length \code{unique(conf_group)}
-of functions for computing group-wise tail-area FDR, one table of gene combined FDR across \code{unique(conf_group)} at level \code{cutoff}.
+a list with:
+\itemize{
+\item \code{comb_fdr}: tibble with gene-level combined FDR at cutoff
+\item \code{group_fdr}: tibble with gene × conf_group FDR values at cutoff
+\item \code{pvaldf}: the cell × gene p-values
+}
 }
 \description{
 Computation of FDR at level \code{cutoff} for each \code{conf_group}

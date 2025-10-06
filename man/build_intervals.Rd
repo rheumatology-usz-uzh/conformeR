@@ -7,10 +7,10 @@
 build_intervals(
   test_data,
   qr_model,
-  other_scores,
-  other_weights,
-  w_x,
-  alpha,
+  scores,
+  weights_cal,
+  w_test,
+  alphas,
   gene,
   gene_names,
   tr_flag
@@ -21,22 +21,22 @@ build_intervals(
 
 \item{qr_model}{A quantile regression model fitted with conformalCQR.}
 
-\item{other_scores}{Numeric vector of calibration scores.}
+\item{scores}{Numeric matrix of conformal scores with dimension \verb{nrow(data_cal) x length(alphas)}.}
 
-\item{other_weights}{Numeric vector of calibration weights.}
+\item{weights_cal}{Numeric vector of calibration weights.}
 
-\item{w_x}{Numeric vector of weights associated with the test samples.}
+\item{w_test}{Numeric vector of weights associated with the test samples.}
 
-\item{alpha}{Numeric scalar, miscoverage level in (0,1).}
+\item{alphas}{Numeric vector of miscoverage levels in (0,1).}
+
+\item{gene}{Character string of the outcome gene.}
 
 \item{gene_names}{Character vector of all gene names.}
 
 \item{tr_flag}{Integer-vector flag (0 or 1) indicating treatment/control setting for each row of \code{test_data}}
-
-\item{gene_idx}{Column index of the outcome gene.}
 }
 \value{
-A numeric matrix with two columns ("lower","upper"), one row per test cell.
+A matrix with \code{nrow(test_data)*length(alphas)} with three columns ("lower","upper","cell_id","alpha").
 }
 \description{
 Constructs prediction intervals for the difference between observed and

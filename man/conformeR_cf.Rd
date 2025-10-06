@@ -12,8 +12,7 @@ conformeR_cf(
   spacing = 0.01,
   size_train = 0.5,
   size_cal = 0.25,
-  cores = 32,
-  gene_chunk = 200
+  cores = 32
 )
 }
 \arguments{

@@ -4,7 +4,7 @@
 \alias{compute_cqr_scores}
 \title{Compute conformal CQR scores}
 \usage{
-compute_cqr_scores(qr_model, data_cal, gene, alpha)
+compute_cqr_scores(qr_model, data_cal, gene, alphas)
 }
 \arguments{
 \item{qr_model}{A quantile regression model fitted with conformalCQR.}
@@ -13,10 +13,10 @@ compute_cqr_scores(qr_model, data_cal, gene, alpha)
 
 \item{gene}{Character string giving the name of the target gene.}
 
-\item{alpha}{Numeric scalar, miscoverage level in (0,1).}
+\item{alphas}{Numeric vector of miscoverage levels in (0,1).}
 }
 \value{
-A numeric vector of conformal scores based on some calibration set.
+A numeric matrix of conformal scores with dimension \verb{nrow(data_cal) x length(alphas)}.
 }
 \description{
 Internal helper function that computes calibration scores for prediction

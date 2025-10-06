@@ -4,19 +4,19 @@
 \alias{eta_conformeR}
 \title{Compute normalized weights and conformal threshold eta(x)}
 \usage{
-eta_conformeR(scores, weights_cal, weights_test, alpha = alpha)
+eta_conformeR(scores, weights_cal, weights_test, alphas)
 }
 \arguments{
-\item{scores}{Numeric vector of conformal scores from the calibration set (output of \code{compute_cqr_scores}).}
+\item{scores}{Numeric matrix of conformal scores from the calibration set (output of \code{compute_cqr_scores}) for each level in \code{alphas}.}
 
 \item{weights_cal}{Numeric vector of calibration weights.}
 
-\item{weights_test}{Numeric scalar, weight associated with the test point.}
+\item{weights_test}{Numeric vector, weight associated with the test point.}
 
-\item{alpha}{Numeric scalar, miscoverage level in (0,1).}
+\item{alphas}{Numeric vector of miscoverage levels in (0,1).}
 }
 \value{
-A numeric scalar giving the conformal threshold \eqn{\eta(x)}.
+A numeric matrix giving the conformal threshold \eqn{\eta(x)} with dimension \verb{nrow(data_cal) x length(alphas)}.
 }
 \description{
 Internal helper function used in weighted split-CQR to normalize calibration

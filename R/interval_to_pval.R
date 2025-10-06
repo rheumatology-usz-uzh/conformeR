@@ -13,7 +13,7 @@ interval_to_pval <- function(interval_df){
   pval_df <-interval_df |>
     group_by(cell_id,conf_group,gene) |>
     summarise(
-      pvalue = (1 + sum(covered=="inside")) / (1 + n()),
+      pvalue = (1 + sum(covered)) / (1 + n()),
       .groups = "drop"
     ) |>
     mutate(gene = gene,
