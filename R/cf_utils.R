@@ -104,3 +104,65 @@ build_intervals <- function(test_data, qr_model, scores, weights_cal,
   rownames(int) <- NULL
   int
 }
+
+#functions for propensity scores estimation
+training_model <- function(model, proper_set, all_genes, obs_condition) {
+  library(glmnet)
+  
+  # choose alpha based on model selected
+  if (model == "lasso") {
+    alpha <- 1
+  } else {
+    alpha <- 0
+  }
+  
+  # design matrix and response
+  x <- as.matrix(proper_set[, all_genes])
+  y <- as.factor(proper_set[[obs_condition]])
+  
+  # fit  
+  cv_fit <- cv.glmnet(
+    x,
+    y,
+    alpha = alpha,              # lasso = 1, ridge = 0
+    family = "binomial",        # logistic regression
+    type.measure = "auc",       # use AUC for model selection
+    nfolds = 5
+  )
+  
+  return(cv_fit)
+}
+
+predict_without_gene <- function(model, gene_name, data) {
+  
+  # fitting lambda:
+  best_lambda <- model$lambda.min
+  
+  # extract coefficients at best lambda
+  coef_full <- coef(model, s = best_lambda)
+  
+  # prepare matrix for prediction (use only genes present in the model
+  all_genes_model <- rownames(coef_full)[-1]  # exclude intercept
+  all_genes_used  <- intersect(all_genes_model, colnames(data))
+  x <- as.matrix(data[, all_genes_used, drop = FALSE])
+  
+  coef_mod <- coef_full
+  
+  # set coefficient of the selected gene to zero 
+  if (gene_name %in% rownames(coef_mod)) {
+    coef_mod[gene_name, 1] <- 0
+  }
+  
+  # extract all coef
+  intercept <- coef_mod["(Intercept)", 1]
+  betas     <- coef_mod[all_genes_used, 1]
+  
+  
+  lp <- as.vector(x %*% betas + intercept)
+  
+  # we need probability so put the output of ridge or lasso in the sigmoif function
+  p <- 1 / (1 + exp(-lp))
+  
+  return(p)
+}
+                     
