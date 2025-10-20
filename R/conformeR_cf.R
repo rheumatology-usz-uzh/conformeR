@@ -56,11 +56,9 @@ conformeR_cf <- function(
       qrT1 <- train_qr(gsets$T1, gene, gene_names)
 
       # Propensity score
-      ps_model <- prop_score(rbind(gsets$T0, gsets$T1), gene, gene_names, obs_condition)
-      ps_cal   <- predict(ps_model, rbind(gsets$C0, gsets$C1), type = "prob") |> pull(.pred_1)
-      ps_test <- predict(ps_model, gsets$Te, type = "prob") |> pull(.pred_1)
-      w_cal    <- (1 - ps_cal) / ps_cal
-      w_test <- (1 - ps_test) / ps_test
+      ps_model <-propensity_score(model="ridge", sce=sce, colnames=colnames)
+      w_cal    <- ps_model$weight_cal
+      w_test   <- ps_model$weight_test
       wC0      <- w_cal[1:nrow(gsets$C0)]
       wC1      <- w_cal[(nrow(gsets$C0) + 1):length(w_cal)]
 
