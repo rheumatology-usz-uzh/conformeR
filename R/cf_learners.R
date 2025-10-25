@@ -19,12 +19,8 @@ prop_score <- function(proper_set, gene, gene_names, obs_condition){
     set_engine("ranger") |>
     set_mode("classification")
 
- # light propensity score estimator
-  #colnames is the list of the column of sce (obs is not included)
-  colnames<-list("Batch", "Group","sim.Lib.Size","cell","sizeFactor","replicate_id","cell_type","conf_group") #<-example
 
 weight_function<-function(fitted_model, data, gene_names){
-  
   cal <- rbind(
     data$C0,
     data$C1
@@ -35,7 +31,6 @@ weight_function<-function(fitted_model, data, gene_names){
   columns_to_remove=list("replicate_id", "cell_type") #only Genes and obs_condition columns left
   proper_all <- proper_all[, !names(proper_all) %in% c(columns_to_remove)]
   
-
   weight_cal_dict <- list()
   weight_test_dict <- list()
   
