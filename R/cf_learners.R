@@ -23,7 +23,7 @@ prop_score <- function(proper_set, gene, gene_names, obs_condition){
   #colnames is the list of the column of sce (obs is not included)
   colnames<-list("Batch", "Group","sim.Lib.Size","cell","sizeFactor","replicate_id","cell_type","conf_group") #<-example
 
-weight_function<-function(fitted_model, data){
+weight_function<-function(fitted_model, data, gene_names){
   
   cal <- rbind(
     data$C0,
@@ -35,15 +35,11 @@ weight_function<-function(fitted_model, data){
   columns_to_remove=list("replicate_id", "cell_type") #only Genes and obs_condition columns left
   proper_all <- proper_all[, !names(proper_all) %in% c(columns_to_remove)]
   
-  #getting genes column names
-  only_genes_tibble= proper_all[, !names(proper_all) %in% c("obs_condition")]
-  all_genes=colnames(only_genes_tibble)
-  
 
   weight_cal_dict <- list()
   weight_test_dict <- list()
   
-  for (gene_of_interest in all_genes){
+  for (gene_of_interest in gene_names){
     #cal set
     prop_score_cal<-predict_without_gene(model=fitted_model,gene_name=gene_of_interest,data=cal)
     #weights
