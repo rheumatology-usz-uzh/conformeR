@@ -105,10 +105,23 @@ build_intervals <- function(test_data, qr_model, scores, weights_cal,
   int
 }
 
-#functions for propensity scores estimation
-training_model <- function(model, proper_set, all_genes, obs_condition) {
-  library(glmnet)
-  
+#training function for propensity scores estimation and weight computation 
+training_model <- function(model, data) {
+    library(glmnet)
+    proper_merged <- rbind(
+      data$T0,
+      data$T1
+    )
+    
+    #for justine to edit
+    columns_to_remove=list("replicate_id", "cell_type") #only Genes and obs_condition columns left
+    proper_all <- proper_all[, !names(proper_all) %in% c(columns_to_remove)]
+    
+    #getting genes column names
+    only_genes_tibble= proper_all[, !names(proper_all) %in% c("obs_condition")]
+    all_genes=colnames(only_genes_tibble)
+    
+      
   # choose alpha based on model selected
   if (model == "lasso") {
     alpha <- 1
@@ -117,8 +130,8 @@ training_model <- function(model, proper_set, all_genes, obs_condition) {
   }
   
   # design matrix and response
-  x <- as.matrix(proper_set[, all_genes])
-  y <- as.factor(proper_set[[obs_condition]])
+  x <- as.matrix(proper_all[, all_genes])
+  y <- as.factor(proper_all[[obs_condition]])
   
   # fit  
   cv_fit <- cv.glmnet(
@@ -129,9 +142,9 @@ training_model <- function(model, proper_set, all_genes, obs_condition) {
     type.measure = "auc",       # use AUC for model selection
     nfolds = 5
   )
-  
   return(cv_fit)
 }
+
 
 predict_without_gene <- function(model, gene_name, data) {
   
