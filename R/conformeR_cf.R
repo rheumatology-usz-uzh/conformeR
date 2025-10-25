@@ -48,6 +48,8 @@ conformeR_cf <- function(
     idx0 <- which(gsets$Te[[obs_condition]] == 0)
     idx1 <- which(gsets$Te[[obs_condition]] == 1)
 
+    #training model 
+    fitted_model<-training_model(model="ridge", data=gsets, gene_names=g_names)
     # Loop over genes in parallel
     gene_pvalues <- bplapply(gene_names, function(gene) {
 
@@ -56,11 +58,11 @@ conformeR_cf <- function(
       qrT1 <- train_qr(gsets$T1, gene, gene_names)
 
       # Propensity score
-      ps_model <-propensity_score(model="ridge", sce=sce, colnames=colnames)
-      w_cal    <- ps_model$weight_cal
-      w_test   <- ps_model$weight_test
-      wC0      <- w_cal[1:nrow(gsets$C0)]
-      wC1      <- w_cal[(nrow(gsets$C0) + 1):length(w_cal)]
+       weights <- weight_function(fitted_model=fitted_model, data=gsets, gene_names)
+       w_cal    <- (1 - ps_cal) / ps_cal
+       w_test <- (1 - ps_test) / ps_test
+       wC0      <- w_cal[1:nrow(gsets$C0)]
+       wC1      <- w_cal[(nrow(gsets$C0) + 1):length(w_cal)]
 
       # calibration scores
       scoresT0 <- compute_cqr_scores(qrT0, gsets$C0, gene, alphas)
