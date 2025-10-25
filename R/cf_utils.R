@@ -106,7 +106,7 @@ build_intervals <- function(test_data, qr_model, scores, weights_cal,
 }
 
 #training function for propensity scores estimation and weight computation 
-training_model <- function(model, data) {
+training_model <- function(model, data, gene_names) {
     library(glmnet)
     proper_merged <- rbind(
       data$T0,
@@ -116,11 +116,6 @@ training_model <- function(model, data) {
     #for justine to edit
     columns_to_remove=list("replicate_id", "cell_type") #only Genes and obs_condition columns left
     proper_all <- proper_all[, !names(proper_all) %in% c(columns_to_remove)]
-    
-    #getting genes column names
-    only_genes_tibble= proper_all[, !names(proper_all) %in% c("obs_condition")]
-    all_genes=colnames(only_genes_tibble)
-    
       
   # choose alpha based on model selected
   if (model == "lasso") {
@@ -130,7 +125,7 @@ training_model <- function(model, data) {
   }
   
   # design matrix and response
-  x <- as.matrix(proper_all[, all_genes])
+  x <- as.matrix(proper_all[, gene_names])
   y <- as.factor(proper_all[[obs_condition]])
   
   # fit  
